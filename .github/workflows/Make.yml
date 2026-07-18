@@ -3,7 +3,7 @@ name: Normal
 on:
   workflow_dispatch:
     inputs:
-MANIFEST_URL:
+      MANIFEST_URL:
         description: 'MANIFEST_URL'
         required: true
         default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
