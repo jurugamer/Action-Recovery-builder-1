@@ -1,4 +1,4 @@
-name: Build TWRP (Allwinner H3)
+name: Normal
 
 on:
   workflow_dispatch:
@@ -8,13 +8,13 @@ on:
         required: true
         default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
       MANIFEST_BRANCH:
-        description: 'TWRP BRANCH (Android Version)'
+        description: 'LIBRARY_BRANCH'
         required: true
         default: 'twrp-7.1'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/jurugamer/twrp_device_allwinner_dolphin-fvd-p1' # <--- MUDE ISSO!
+        default: 'https://github.com/jurugamer/twrp_device_allwinner_dolphin-fvd-p1'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
@@ -35,23 +35,23 @@ jobs:
     
     steps:
     - name: Check Out
-      uses: actions/checkout@v3
+      uses: actions/checkout@main
       
     - name: Prepare the environment
       run: |
-        sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/sudo apt/sources.list.d
-        sudo apt -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mysql* php* || true
-        sudo apt -y autoremove --purge || true
-        sudo apt -y autoclean || true
-        sudo apt clean || true
-        sudo apt update
-        sudo apt -y upgrade
-        sudo apt -y install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip jq bc ccache lib32z1-dev liblz4-tool libncurses5-dev libssl-dev libxml2 lzop pngcrush rsync schedtool squashfs-tools imagemagick libbz2-dev libssl-dev lzma ncftp bash-completion openjdk-8-jdk qemu-user-static python2 python3 libtinfo5 libncurses5
-        sudo ln -sf /usr/bin/python2 /usr/bin/python
+            sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/sudo apt/sources.list.d
+            sudo apt -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mysql* php* || true
+            sudo apt -y autoremove --purge || true
+            sudo apt -y autoclean || true
+            sudo apt clean || true
+            sudo apt update
+            sudo apt -y upgrade
+            sudo apt -y install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip jq bc ccache lib32z1-dev liblz4-tool libncurses5-dev libssl-dev libxml2 lzop pngcrush rsync schedtool squashfs-tools imagemagick libbz2-dev libssl-dev lzma ncftp bash-completion openjdk-8-jdk qemu-user-static python2 python3 libtinfo5 libncurses5
+            sudo ln -sf /usr/bin/python2 /usr/bin/python
         
     - name: Set variables
       run: |
-        echo "date=$(date +%F)" >> $GITHUB_OUTPUT
+        echo "::set-output name=date::$(date +%F)"
       id: var
       
     - name: Install repo
@@ -66,8 +66,8 @@ jobs:
         PATH=~/bin:$PATH
         mkdir workspace
         cd workspace
-        echo "pwd=$(pwd)" >> $GITHUB_OUTPUT
-        git config --global user.name "Action-Build-Bot"
+        echo "::set-output name=pwd::$(pwd)"
+        git config --global user.name "Hikaru's Action-Build-Bot"
         git config --global user.email "Android@teio.tk"
         repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
       id: pwd
@@ -77,6 +77,7 @@ jobs:
         PATH=~/bin:$PATH
         cd workspace
         repo sync -j$(nproc --all) -f --force-sync
+        ls -al
       
     - name: Clone device tree
       run: |
@@ -90,7 +91,7 @@ jobs:
         cd ${{ steps.pwd.outputs.pwd }}
         export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch omni_${{ github.event.inputs.DEVICE_NAME }}-eng 
+        lunch omni_${{ github.event.inputs.DEVICE_NAME }}-userdebug 
         make clean
         make recoveryimage -j$(nproc --all)        
       
@@ -98,8 +99,8 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
-        name: TWRP-${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
+        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
-        body: TWRP Recovery para Allwinner H3 (${{ github.event.inputs.DEVICE_NAME }})
+        body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
