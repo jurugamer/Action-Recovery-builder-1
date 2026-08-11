@@ -21,11 +21,11 @@ on:
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/allwinner/dolphin-fvd-p1'
+        default: 'device/allwinner/dolphin_fvd_p1'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'dolphin-fvd-p1'
+        default: 'dolphin_fvd_p1'
         
 jobs:
   build:
