@@ -1,31 +1,31 @@
 name: Normal
 on:
-workflow_dispatch:
-    inputs:
-      MANIFEST_URL:
-        description: 'MANIFEST_URL'
-        required: true
-        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
-      MANIFEST_BRANCH:
-        description: 'LIBRARY_BRANCH'
-        required: true
-        default: 'twrp-7.1'
-      DEVICE_TREE_URL:
-        description: 'DEVICE_TREE_URL'
-        required: true
-        default: 'https://github.com/jurugamer/twrp_device_rockchip_rk3288_box'
-      DEVICE_TREE_BRANCH:
-        description: 'DEVICE_TREE_BRANCH'
-        required: true
-        default: 'main'
-      DEVICE_PATH:
-        description: 'DEVICE_PATH'
-        required: true
-        default: 'device/rockchip/rk3288_box'
-      DEVICE_NAME:
-        description: 'DEVICE_NAME'
-        required: true
-        default: 'rk3288_box'
+    workflow_dispatch:
+        inputs:
+          MANIFEST_URL:
+            description: 'MANIFEST_URL'
+            required: true
+            default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
+          MANIFEST_BRANCH:
+            description: 'LIBRARY_BRANCH'
+            required: true
+            default: 'twrp-7.1'
+          DEVICE_TREE_URL:
+            description: 'DEVICE_TREE_URL'
+            required: true
+            default: 'https://github.com/jurugamer/twrp_device_rockchip_rk3288_box'
+          DEVICE_TREE_BRANCH:
+            description: 'DEVICE_TREE_BRANCH'
+            required: true
+            default: 'main'
+          DEVICE_PATH:
+            description: 'DEVICE_PATH'
+            required: true
+            default: 'device/rockchip/rk3288_box'
+          DEVICE_NAME:
+            description: 'DEVICE_NAME'
+            required: true
+            default: 'rk3288_box'
         
 jobs:
   build:
