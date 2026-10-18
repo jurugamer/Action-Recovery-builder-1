@@ -1,6 +1,6 @@
 name: Normal
 on:
-  workflow_dispatch:
+workflow_dispatch:
     inputs:
       MANIFEST_URL:
         description: 'MANIFEST_URL'
@@ -13,7 +13,7 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/jurugamer/twrp_device_allwinner_dolphin-fvd-p1'
+        default: 'https://github.com/jurugamer/twrp_device_rockchip_rk3288_box'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
@@ -21,11 +21,11 @@ on:
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/allwinner/dolphin_fvd_p1'
+        default: 'device/rockchip/rk3288_box'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'dolphin_fvd_p1'
+        default: 'rk3288_box'
         
 jobs:
   build:
