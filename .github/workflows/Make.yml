@@ -21,7 +21,7 @@ on:
           DEVICE_PATH:
             description: 'DEVICE_PATH'
             required: true
-            default: 'device/rockchip/twrp-UT3'
+            default: 'device/ugoos/UT3'
           DEVICE_NAME:
             description: 'DEVICE_NAME'
             required: true
